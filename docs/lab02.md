@@ -249,9 +249,9 @@ Expose RestAPI agent, so Frontend server can read data using RestAPI. This time 
 
 You need to find the NodePort and Kubernetes Node external IP to access the 'rest-api-agent.
 
-* Use the following command to display the port exposed by 'rest-api-agent-service' -
+* Use the following command to display the port exposed by 'rest-api-service' -
     
-    kubectl get service rest-api-agent-service
+    kubectl get service rest-api-service
 
 * Use the following command to display the 'External-IP' of you kubernetes nodes -
 
