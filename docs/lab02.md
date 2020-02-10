@@ -56,7 +56,7 @@ spec:
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/pradeesi/HybridCloudApp/master/HybridCloudApp/Kubernetes/Backend/Mariadb/mariadb_persistent_volume.yaml
+    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/pvc.yaml
 
 ### Declare secret with credentials for MariaDB
 
@@ -118,7 +118,7 @@ spec:
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/pradeesi/HybridCloudApp/master/HybridCloudApp/Kubernetes/Backend/Mariadb/mariadb_deployment.yaml
+    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mariadb_deployment.yaml
 
 check deployment:
 
@@ -177,7 +177,7 @@ spec:
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/pradeesi/HybridCloudApp/master/HybridCloudApp/Kubernetes/Backend/MQTT_DB_Agent/mqtt_db_agent_deployment.yaml
+    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mqtt_db_agent_deployment.yaml
 
 MQTT is not exposed, rather it is connecting to AWS IoT platform (over proxy which is hardcode in container) and writing data to MariaDB, leveraging mariadb-service to reach the database.
 
@@ -232,7 +232,7 @@ spec:
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/pradeesi/HybridCloudApp/master/HybridCloudApp/Kubernetes/Backend/REST_API_Agent/rest_api_agent.yaml
+    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/restapi.yaml
 
 Expose RestAPI agent, so Frontend server can read data using RestAPI. This time we will expose service externally so you can see the raw data in your browser:
 
@@ -301,7 +301,7 @@ spec:
 
 or use direct command:
 
-    kubectl apply -f 
+    kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/frontend.yaml
 
 Due to lack of LoadBalancer in this cluster, we will again leverage NodePort to expose our frontend webserver externally.
 
