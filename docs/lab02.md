@@ -10,7 +10,7 @@ In this lab we will use NFS storage. In modern systems like Hyperflex, Kubernete
 
     vi pv.yaml
 
-'''yaml
+```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -25,7 +25,7 @@ spec:
   nfs:
     path: /mnt/sharedfolder/studentXX ## replace XX with your student ID
     server: 10.62.86.11
-'''
+```
 
     kubectl apply -f pv.yaml
 
@@ -37,7 +37,7 @@ To keep the sensor data safe during Pod restarts, you would create a new Persist
 
     vi pvc.yaml
 
-'''yaml
+```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -50,7 +50,7 @@ spec:
   resources:
     requests:
       storage: 2Gi
-'''
+```
 
     kubectl apply -f pvc.yaml
 
@@ -72,7 +72,7 @@ Deploy MariaDB, using either command below, or copy paste the manifest to an emp
 
     vi mariadb.yaml
 
-'''yaml
+```yaml
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -112,7 +112,7 @@ spec:
       - name: mariadb-persistent-storage
         persistentVolumeClaim:
           claimName: mariadb-pv-claim
-'''
+```
 
     kubectl apply -f mariadb.yaml
 
@@ -142,7 +142,7 @@ Deploy mqtt_db_agent microservice, using either command below, or copy paste the
 
 vi mqtt.yaml
 
-'''yaml
+```yaml
 ---
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
@@ -171,7 +171,7 @@ spec:
             secretKeyRef:
               name: mariadb-root-pass
               key: password
-'''
+```
 
     kubectl apply -f mqtt.yaml
 
@@ -196,7 +196,7 @@ This microservice reads data from database, and expose it over HTTP, so it will 
 
 vi restapi.yaml
 
-'''yaml
+```yaml
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
@@ -226,7 +226,7 @@ spec:
             secretKeyRef:
               name: mariadb-root-pass
               key: password
-'''
+```
 
     kubectl apply -f restapi.yaml
 
@@ -269,7 +269,7 @@ Deploy Frontend server then:
 
     vi frontend.yaml
 
-'''yaml
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -297,7 +297,7 @@ spec:
             name: frontend-to-backend
       - image: fwardzic/nginx_srvr
         name: nginx-server
-'''
+```
 
 or use direct command:
 
