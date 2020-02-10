@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iot-frontend
+  labels:
+    app: iot-frontend
+spec:
+  selector:
+    matchLabels:
+      app: iot-frontend
+      tier: web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: iot-frontend
+        tier: web
+    spec:
+      containers:
+      - image: fwardzic/frontend_server
+        name: frontend-server
+        envFrom:
+        - configMapRef:
+            name: frontend-to-backend
+      - image: fwardzic/nginx_srvr
+        name: nginx-server
