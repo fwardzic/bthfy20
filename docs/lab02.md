@@ -31,8 +31,8 @@ spec:
 
 Verify your persistent volume
 
-  kubectl get pv
-  kubectl describe pv pv-studentXX
+    kubectl get pv
+    kubectl describe pv pv-studentXX
 
 ### Declare PersistentVolumeClaim
 
