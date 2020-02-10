@@ -29,6 +29,11 @@ spec:
 
     kubectl apply -f pv.yaml
 
+Verify your persistent volume
+
+  kubectl get pv
+  kubectl describe pv pv-studentXX
+
 ### Declare PersistentVolumeClaim
 
 A **Kubernetes Persistent Volume Claim (PVC)** is a request for storage by a user. It is similar to a pod. Pods consume node resources and PVCs consume Persistent Volume (PV) resources. Pods can request specific levels of resources (CPU and Memory). Claims can request specific size and access modes (e.g., can be mounted once read/write or many times read-only).
@@ -57,6 +62,10 @@ spec:
 or deploy directly using this command:
 
     kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/pvc.yaml
+
+Verify if your persistent volume now has been claimed:
+
+    kubectl get pvc mariadb-pv-claim
 
 ### Declare secret with credentials for MariaDB
 
