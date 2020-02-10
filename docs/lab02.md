@@ -251,11 +251,11 @@ You need to find the NodePort and Kubernetes Node external IP to access the 'res
 
 * Use the following command to display the port exposed by 'rest-api-agent-service' -
 
-    `kubectl get service rest-api-agent-service`
+    kubectl get service rest-api-agent-service
 
 * Use the following command to display the 'External-IP' of you kubernetes nodes -
 
-	  `kubectl get nodes -o wide`
+	  kubectl get nodes -o wide
 
 Note down the Node External IP Address and NodePort Service Port Number. These values would be used in next section for deploying the frontend app as the environment variables values ('**BACKEND\_HOST**' and '**BACKEND\_PORT**'). 
 You can open web browser and enter IP:port values like this:
