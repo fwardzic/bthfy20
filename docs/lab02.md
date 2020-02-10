@@ -149,7 +149,7 @@ check mariaDB service:
 
 Deploy mqtt_db_agent microservice, using either command below, or copy paste the manifest to an empty file on the server and apply.
 
-vi mqtt.yaml
+    vi mqtt.yaml
 
 ```yaml
 ---
@@ -203,7 +203,7 @@ Check logs to see whether MQTT agent successfully connected to AWS IoT platform,
 
 This microservice reads data from database, and expose it over HTTP, so it will be later consumed by Frontend server using RestAPI channel rather direct connection to the database.
 
-vi restapi.yaml
+    vi restapi.yaml
 
 ```yaml
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -251,11 +251,11 @@ You need to find the NodePort and Kubernetes Node external IP to access the 'res
 
 * Use the following command to display the port exposed by 'rest-api-agent-service' -
 
-    kubectl get service rest-api-agent-service
+    `kubectl get service rest-api-agent-service`
 
 * Use the following command to display the 'External-IP' of you kubernetes nodes -
 
-	kubectl get nodes -o wide
+	  `kubectl get nodes -o wide`
 
 Note down the Node External IP Address and NodePort Service Port Number. These values would be used in next section for deploying the frontend app as the environment variables values ('**BACKEND\_HOST**' and '**BACKEND\_PORT**'). 
 You can open web browser and enter IP:port values like this:
