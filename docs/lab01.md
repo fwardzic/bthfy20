@@ -19,7 +19,6 @@ FROM alpine:latest
 MAINTAINER fwardzic
 RUN apk --update add nginx
 ADD 2048/ /usr/share/nginx/html
-RUN mkdir -p /run/nginx
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ~~~~
