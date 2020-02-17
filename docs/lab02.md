@@ -268,7 +268,7 @@ You can open web browser and enter IP:port values like this:
 	
 	http://<kubernetes node's external ip>:<nodePort>/sensor_data/city
 
-## Deploy backend microservices
+## Deploy frontend microservices
 
 In the previous step you noted the the external IP and port. Now we have to pass this information inside frontend container. we will leverage ConfigMap and it will be used by POD to import those values as environment variables inside container.
 

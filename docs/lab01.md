@@ -20,6 +20,7 @@ MAINTAINER fwardzic
 RUN apk --update add nginx
 ADD 2048/ /usr/share/nginx/html
 EXPOSE 80
+RUN mkdir -p /run/nginx
 CMD ["nginx", "-g", "daemon off;"]
 ~~~~
 
