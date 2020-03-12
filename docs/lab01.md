@@ -14,7 +14,7 @@ First clone git repository with the 2048 game:
 
 `git clone https://github.com/gabrielecirulli/2048`
 
->> All credits goes to Gabriele Cirulli - author of the 2048 game.
+> All credits goes to Gabriele Cirulli - author of the 2048 game.
 
 ### Task 1: Create dockerfile
 
@@ -49,7 +49,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 `docker build -t <your_docker_hub_user_id>/bth-2048:v1 .`
 
->> Don't forget about "." (dot) at the end !
+> Don't forget about "." (dot) at the end !
 
 2. Run container 
 
@@ -57,15 +57,16 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ### Task 3: Fix issue with the application
 
-1. first find our host port to which our container redirected traffic
 
-`docker ps`
+1. Open web page by clicking on the port link above terminal in Play-with-docker, 
 
-2. Open web page by clicking on the port link above terminal in Play-with-docker, following command or in terminal of docker host using following command:
+<img src="https://raw.githubusercontent.com/fwardzic/bthfy20/master/docs/images/pwd-service.png">
+
+or following command or in terminal of docker host using following command:
 
 `curl 127.0.0.1:port`
 
-3. Check container ID:
+2. Check container ID:
 
 `docker ps`
 
@@ -76,11 +77,11 @@ CONTAINER ID        IMAGE                  COMMAND                  CREATED     
 916d67bd3c6c        fwardzic/bth-2048:v1   "nginx -g 'daemon of…"   9 minutes ago       Up 9 minutes        0.0.0.0:32768->80/tcp   intelligent_saha
 ~~~~
 
-4. copy nginx file from docker container to the host (replace container ID with yours)
+3. copy nginx file from docker container to the host (replace container ID with yours)
 
 `docker cp 916d67bd3c6c:/etc/nginx/conf.d/default.conf ./default.conf`
 
-5. Using editor, replace string "return 404;" with the following "root /usr/share/nginx/html" in the `location /` section:
+4. Using editor, replace string "return 404;" with the following "root /usr/share/nginx/html" in the `location /` section:
 
 ```
 <snip>
@@ -90,17 +91,17 @@ location / {
 <snip>
 ```
 
-6. Copy back updated file back to the container:
+5. Copy back updated file back to the container:
 
 `docker cp ./default.conf 916d67bd3c6c:/etc/nginx/conf.d/default.conf`
 
-7. Commit changes to container:
+6. Commit changes to container:
 
 `docker commit 916d67bd3c6c <your_docker_hub_user_id>/bth-2048:v2`
 
 Above command creates new image with additional layer. 
 
-8. Stop old version and run new version of container based on the new image:
+7. Stop old version and run new version of container based on the new image:
 
 `docker stop 916d67bd3c6c`
 

@@ -1,8 +1,13 @@
 # Lab 02 Deploy microservice IOT app
 
+##
+
+
 ## Deploy backend microservices
 
-### Declare persistent Volume for MariaDB
+### Task 1: (OPTIONAL) Declare persistent Volume for MariaDB
+
+**Please do this task only if you are not using lab in DMZ (behind anyconnect) !!**
 
 A PersistentVolume (PV) is a piece of storage in the cluster that has been provisioned by an administrator or dynamically provisioned using Storage Classes. It is a resource in the cluster just like a node is a cluster resource. PVs are volume plugins like Volumes, but have a lifecycle independent of any individual Pod that uses the PV. This API object captures the details of the implementation of the storage, be that NFS, iSCSI, or a cloud-provider-specific storage system.
 
@@ -34,11 +39,11 @@ Verify your persistent volume
     kubectl get pv
     kubectl describe pv pv-studentXX
 
-### Declare PersistentVolumeClaim
+### Task 2: Declare PersistentVolumeClaim
 
 A **Kubernetes Persistent Volume Claim (PVC)** is a request for storage by a user. It is similar to a pod. Pods consume node resources and PVCs consume Persistent Volume (PV) resources. Pods can request specific levels of resources (CPU and Memory). Claims can request specific size and access modes (e.g., can be mounted once read/write or many times read-only).
 
-To keep the sensor data safe during Pod restarts, you would create a new Persistent Volume Claim. 
+1. To keep the sensor data safe during Pod restarts, you would create a new Persistent Volume Claim. 
 
     vi pvc.yaml
 
@@ -63,11 +68,11 @@ or deploy directly using this command:
 
     kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/pvc.yaml
 
-Verify if your persistent volume now has been claimed:
+2. Verify if your persistent volume now has been claimed:
 
     kubectl get pvc mariadb-pv-claim
 
-### Declare secret with credentials for MariaDB
+### Task 3: Declare secret with credentials for MariaDB
 
 A **Kubernetes Secret** is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in an image; putting it in a Secret object allows for more control over how it is used, and reduces the risk of accidental exposure.
 
@@ -75,9 +80,9 @@ The MariaDB container image uses an environment variable named as 'MYSQL\_ROOT\_
 
     kubectl create secret generic mariadb-root-pass --from-literal=password=cisco123
 
-### Create MariaDB Deployment
+### Task 4: Create MariaDB Deployment
 
-Deploy MariaDB, using either command below, or copy paste the manifest to an empty file on the server and apply.
+1. Deploy MariaDB, using either command below, or copy paste the manifest to an empty file on the server and apply.
 
     vi mariadb.yaml
 
@@ -129,25 +134,24 @@ or deploy directly using this command:
 
     kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mariadb_deployment.yaml
 
-check deployment:
+2. check deployment:
 
     kubectl get deployment
     kubectl get pods
 
-
-Expose MariaDB service as ClusterIP:
+3. Expose MariaDB service as ClusterIP:
 
     kubectl expose deployment iot-backend-mariadb --type=ClusterIP --target-port=3306 --port=3306 --name mariadb-service
 
 >NOTE: every user will execute the same command creating objects with the same names, however each student is using different namespace, therefore names can overlap.
 
-check mariaDB service:
+4. check mariaDB service:
 
     kubectl get service mariadb-service
 
-### Deploy MQTT-to-DB-Agent microservice
+### Task 4: Deploy MQTT-to-DB-Agent microservice
 
-Deploy mqtt_db_agent microservice, using either command below, or copy paste the manifest to an empty file on the server and apply.
+1. Deploy mqtt_db_agent microservice, using either command below, or copy paste the manifest to an empty file on the server and apply.
 
     vi mqtt.yaml
 
@@ -188,20 +192,20 @@ or deploy directly using this command:
 
     kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mqtt_db_agent_deployment.yaml
 
-MQTT is not exposed, rather it is connecting to AWS IoT platform (over proxy which is hardcode in container) and writing data to MariaDB, leveraging mariadb-service to reach the database.
+2. MQTT is not exposed, rather it is connecting to AWS IoT platform (over proxy which is hardcode in container) and writing data to MariaDB, leveraging mariadb-service to reach the database.
 
 check deployment and pod status. 
 
     kubectl get deployments
     kubectl get pods
 
-Check logs to see whether MQTT agent successfully connected to AWS IoT platform, create database and tables in MariaDB and finally start receiving data.
+3. Check logs to see whether MQTT agent successfully connected to AWS IoT platform, create database and tables in MariaDB and finally start receiving data.
 
     kubectl logs <mqtt_pod_name>
 
-### Deploy RestAPI agent
+### Task 5: Deploy RestAPI agent
 
-This microservice reads data from database, and expose it over HTTP, so it will be later consumed by Frontend server using RestAPI channel rather direct connection to the database.
+1. This microservice reads data from database, and expose it over HTTP, so it will be later consumed by Frontend server using RestAPI channel rather direct connection to the database.
 
     vi restapi.yaml
 
@@ -243,21 +247,21 @@ or deploy directly using this command:
 
     kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/restapi.yaml
 
-Expose RestAPI agent, so Frontend server can read data using RestAPI. This time we will expose service externally so you can see the raw data in your browser:
+2. Expose RestAPI agent, so Frontend server can read data using RestAPI. This time we will expose service externally so you can see the raw data in your browser:
 
     kubectl expose deployment iot-backend-rest-api-agent --type=NodePort --target-port=5050 --port=5050 --name=rest-api-service
 
 You need to find the NodePort and Kubernetes Node external IP to access the 'rest-api-agent.
 
-Use the following command to display the port exposed by 'rest-api-service' -
+3. Use the following command to display the port exposed by 'rest-api-service' -
     
     kubectl get service rest-api-service
 
-Use the following command to display the 'External-IP' of you kubernetes nodes -
+4. Use the following command to display the 'External-IP' of you kubernetes nodes -
 
 	  kubectl get nodes -o wide
 
-Note down the Node External IP Address and NodePort Service Port Number. These values would be used in next section for deploying the frontend app as the environment variables values ('**BACKEND\_HOST**' and '**BACKEND\_PORT**'). 
+5. Note down the Node External IP Address and NodePort Service Port Number. These values would be used in next section for deploying the frontend app as the environment variables values ('**BACKEND\_HOST**' and '**BACKEND\_PORT**'). 
 You can open web browser and enter IP:port values like this:
 
 	http://<kubernetes node's external ip>:<nodePort>/cities
@@ -268,13 +272,13 @@ You can open web browser and enter IP:port values like this:
 	
 	http://<kubernetes node's external ip>:<nodePort>/sensor_data/city
 
-## Deploy frontend microservices
+## Task 6: Deploy frontend microservice
 
-In the previous step you noted the the external IP and port. Now we have to pass this information inside frontend container. we will leverage ConfigMap and it will be used by POD to import those values as environment variables inside container.
+1. In the previous step you noted the the external IP and port. Now we have to pass this information inside frontend container. we will leverage ConfigMap and it will be used by POD to import those values as environment variables inside container.
 
     kubectl create configmap frontend-to-backend --from-literal=BACKEND_HOST=<any_node_IP> --from-literal=BACKEND_PORT=<port>
 
-Deploy Frontend server then:
+2. Deploy Frontend server then:
 
     vi frontend.yaml
 
@@ -312,7 +316,7 @@ or use direct command:
 
     kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/frontend.yaml
 
-Due to lack of LoadBalancer in this cluster, we will again leverage NodePort to expose our frontend webserver externally.
+3. Expose our frontend webserver externally.
 
     kubectl expose deployment iot-frontend --name frontend-service --type=NodePort --port=80 --target-port=80
 
