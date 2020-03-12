@@ -16,8 +16,6 @@ First clone git repository with the 2048 game:
 
 >> All credits goes to Gabriele Cirulli - author of the 2048 game.
 
-confirm that the 
-
 ### Task 1: Create dockerfile
 
 1. create "dockerfile":
@@ -26,7 +24,7 @@ confirm that the
 
 2. Using play-with-docker editor
 
-<img src="
+<img src="https://raw.githubusercontent.com/fwardzic/bthfy20/master/docs/images/pwd-editor.png">
 
 paste following content:
 ~~~~
