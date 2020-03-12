@@ -2,18 +2,33 @@
 
 In this excercise you will create container which will contain web-server with the 2048 game.
 
+First login to play-with-docker page as outlined in lab-access instruction.
+
+Create one instance by clicking on " + ADD NEW INSTANCE " button.
+
+Once created you should see following screen:
+
+
+### Task 1: Repo cloning
 First clone git repository with the 2048 game:
 
 `git clone https://github.com/gabrielecirulli/2048`
 
-All credits goes to Gabriele Cirulli - author of the 2048 game.
+>> All credits goes to Gabriele Cirulli - author of the 2048 game.
 
-then create "dockerfile":
+confirm that the 
+
+### Task 1: Create dockerfile
+
+1. create "dockerfile":
 
 `touch dockerfile`
 
-Using PWD editor or vi in terminal, paste following content:
+2. Using play-with-docker editor
 
+<obrazek>
+
+paste following content:
 ~~~~
 FROM alpine:latest
 MAINTAINER fwardzic
@@ -24,47 +39,50 @@ RUN mkdir -p /run/nginx
 CMD ["nginx", "-g", "daemon off;"]
 ~~~~
 
-Build container using following command:
+3. once done, please save.
+
+4. Make sure that content has been added to the file:
+
+`cat dockerfile`
+
+### Task 2: Build container image
+
+1. Build container using following command:
 
 `docker build -t <your_docker_hub_user_id>/bth-2048:v1 .`
 
-Run container 
+>> Don't forget about "." (dot) at the end !
+
+2. Run container 
 
 `docker run -P -d <your_docker_hub_user_id>/bth-2048:v1`
 
-check web what's displayed on the webpage
+### Task 3: Fix issue with the application
 
 1. first find our host port to which our container redirected traffic
 
 `docker ps`
 
-2. Open web page in docker host using following command or by clicking on the port link abouve terminal in PWD.
+2. Open web page by clicking on the port link above terminal in Play-with-docker, following command or in terminal of docker host using following command:
 
 `curl 127.0.0.1:port`
 
-3. Once you found that you get 404 no response, then you need to modify nginx configuration file:
-
-`/etc/nginx/conf.d/default.conf`
-
-4. (option 1) You can copy it from running container:
-
-`docker cp <image_ID>:/<path> <host_path>`
-
-5. (option 2) You can modify file inside container and commit container with the new layer.
-
-while having your container running, enter into it:
-
-first check container ID:
+3. Check container ID:
 
 `docker ps`
 
-`docker exec –it db2c356a51c1 /bin/sh`
+~~~~
+[node1] (local) root@192.168.0.8 ~
+$ docker ps 
+CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                   NAMES
+916d67bd3c6c        fwardzic/bth-2048:v1   "nginx -g 'daemon of…"   9 minutes ago       Up 9 minutes        0.0.0.0:32768->80/tcp   intelligent_saha
+~~~~
 
-edit file:
+4. copy nginx file from docker container to the host (replace container ID with yours)
 
-`vi /etc/nginx/conf.d/default.conf`
+`docker cp 916d67bd3c6c:/etc/nginx/conf.d/default.conf ./default.conf`
 
-replace existing statement with the following in the `location /` section:
+5. Using editor, replace existing statement with the following in the `location /` section:
 
 ```
 <snip>
@@ -73,12 +91,14 @@ location / {
         }
 <snip>
 ```
-Commit container:
+6. Commit changes to container:
 
-`docker commit db2c356a51c1 2048:v2`
+`docker commit 916d67bd3c6c <your_docker_hub_user_id>/bth-2048:v2`
 
-6. Stop old version and run new version of container:
+Above command creates new image with additional layer. 
 
-`docker stop db2c356a51c1`
+7. Stop old version and run new version of container based on the new image:
+
+`docker stop 916d67bd3c6c`
 
 `docker run -d -P <your_docker_hub_user_id>/bth-2048:v2`
