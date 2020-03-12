@@ -26,7 +26,7 @@ confirm that the
 
 2. Using play-with-docker editor
 
-<obrazek>
+<img src="
 
 paste following content:
 ~~~~
@@ -82,7 +82,7 @@ CONTAINER ID        IMAGE                  COMMAND                  CREATED     
 
 `docker cp 916d67bd3c6c:/etc/nginx/conf.d/default.conf ./default.conf`
 
-5. Using editor, replace existing statement with the following in the `location /` section:
+5. Using editor, replace string "return 404;" with the following "root /usr/share/nginx/html" in the `location /` section:
 
 ```
 <snip>
@@ -91,13 +91,18 @@ location / {
         }
 <snip>
 ```
-6. Commit changes to container:
+
+6. Copy back updated file back to the container:
+
+`docker cp ./default.conf 916d67bd3c6c:/etc/nginx/conf.d/default.conf`
+
+7. Commit changes to container:
 
 `docker commit 916d67bd3c6c <your_docker_hub_user_id>/bth-2048:v2`
 
 Above command creates new image with additional layer. 
 
-7. Stop old version and run new version of container based on the new image:
+8. Stop old version and run new version of container based on the new image:
 
 `docker stop 916d67bd3c6c`
 
