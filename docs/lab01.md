@@ -20,4 +20,10 @@ Once done, check status of cluster - you should see it is in the "NotReady" stat
 
 <img src="https://raw.githubusercontent.com/fwardzic/bthfy20/master/docs/images/k8s-kube-1node-notready.png">
 
+Initialize pod networking CNI
+
+```kubectl apply -f https://raw.githubusercontent.com/cloudnativelabs/kube-router/master/daemonset/kubeadm-kuberouter.yaml```
+
 Add one more instance. 
+
+<img src="https://raw.githubusercontent.com/fwardzic/bthfy20/master/docs/images/k8s-kube-1node-notready.png">
