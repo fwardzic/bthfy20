@@ -88,10 +88,9 @@ spec:
         - containerPort: 6379
 ```
 
-Manifest is available also on github
+instead of copy paste manifiest to your PC, you can use following command to apply that manifest file hosted in github
 
-```kubectl apply -f ```
-
+```kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/guestbook/guestbook-redis-master.yaml```
 
 - Check status of your pods - ```kubectl get pods```
 - check status of replicaset - ```kubectl get rs```
@@ -125,6 +124,9 @@ spec:
         ports:
         - containerPort: 6379
 ```
+instead of copy paste manifiest to your PC, you can use following command to apply that manifest file hosted in github
+
+```kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/guestbook/guestbook-redis-slave.yaml```
 
 - Check status of your pods - ```kubectl get pods```
 - check status of replicaset - ```kubectl get rs```
@@ -165,6 +167,10 @@ spec:
         - containerPort: 80
 ```
 
+instead of copy paste manifiest to your PC, you can use following command to apply that manifest file hosted in github
+
+```kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/guestbook/guestbook-frontend.yaml```
+
 - Check status of your pods - ```kubectl get pods```
 - check status of replicaset - ```kubectl get deployment```
 
@@ -200,6 +206,10 @@ spec:
         ports:
         - containerPort: 8080
 ```
+instead of copy paste manifiest to your PC, you can use following command to apply that manifest file hosted in github
+
+```kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/rolling-update-deployment.yaml```
+
 
 expose web service internally withing the cluster
 
