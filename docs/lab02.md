@@ -52,6 +52,10 @@ spec:
   restartPolicy: OnFailure
 ```
 
+Copy that manifest file to your text editor, save and execute from your PC:
+
+```kubectl apply -f <path to your manifest file.yaml>```
+
 exit from pod and check status of you third pod, what is the difference, and why?
 
 delete all pods:
