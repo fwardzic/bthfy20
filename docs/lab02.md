@@ -1,6 +1,6 @@
 ## Lab02 - Pods, ReplicaSets, Deployments
 
-1. Create your namespace:
+### 1. Create your namespace:
 
 ```kubectl create namespace studentXX```
 
@@ -14,7 +14,7 @@ change default namespace in your kubectl, so you don't have specify namespace ev
 
 ---
 
-2. Deploy single Pod, in the imperative way, check what happens when you will exit from shell
+### 2. Deploy single Pod, in the imperative way, check what happens when you will exit from shell
 
 ```kubectl run -it test-pod-1 --image=alpine --restart=Never -- /bin/sh```
 
@@ -36,7 +36,7 @@ exit from pod and check status of you second pod, what is the difference, and wh
 
 ---
 
-3. Deploy pod using declarative approach:
+### 3. Deploy pod using declarative approach:
 
 create a file with following manifest:
 
@@ -60,7 +60,7 @@ delete all pods:
 
 ---
 
-4. Implement replicas for Guestbook app
+### 4. Implement replicas for Guestbook app
 
 apply following manifest to deploy redis-master database node:
 
@@ -134,7 +134,7 @@ spec:
 
 ---
 
-5. Implement frontend server for guestbook app:
+### 5. Implement frontend server for guestbook app:
 
 apply following manifest to deploy frontend web server nodes:
 
@@ -170,7 +170,7 @@ spec:
 
 ---
 
-6. Rolling update - deployment 
+### 6. Rolling update - deployment 
 
 Apply following deployment of simple web page
 
@@ -203,5 +203,30 @@ spec:
 
 expose web service internally withing the cluster
 
-```kubectl expose deployment hello-rolling```
+```kubectl expose deployment hello-rolling --port=80 --target-port=8080```
 
+run another pod for testing purposes:
+
+```kubectl run web-test --image=nginx --generator=run-pod/v1```
+
+check if pod is running and try to login to shell of the pod:
+
+```kubectl exec -it web-test -- bash```
+
+from inside container, run curl command:
+
+```curl http://hello-rolling```
+
+exit container
+
+run following command to change the application configuration. 
+
+```kubectl set env deployment/hello-rolling RESPONSE="Hello from an updated app !!"```
+
+See what will happen with your pods
+
+- how many pods are running
+- what is the uptime of the pods?
+- go back to the web-test pod and try again curl, what do you see?
+
+---

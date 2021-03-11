@@ -1,4 +1,4 @@
-# Lab 02 Deploy microservice IOT app
+# Lab 04 (Optional) Deploy microservice IOT app
 
 ##
 
@@ -13,7 +13,7 @@ A PersistentVolume (PV) is a piece of storage in the cluster that has been provi
 
 In this lab we will use NFS storage. In modern systems like Hyperflex, Kubernetes leverages CSI - Container Storage Interface which is a module with storage driver.
 
-    vi pv.yaml
+    ```vi pv.yaml```
 
 ```yaml
 apiVersion: v1
@@ -32,12 +32,12 @@ spec:
     server: 10.62.86.11
 ```
 
-    kubectl apply -f pv.yaml
+    ```kubectl apply -f pv.yaml```
 
 Verify your persistent volume
 
-    kubectl get pv
-    kubectl describe pv pv-studentXX
+    ```kubectl get pv```
+    ```kubectl describe pv pv-studentXX```
 
 ### Task 2: Declare PersistentVolumeClaim
 
@@ -45,7 +45,7 @@ A **Kubernetes Persistent Volume Claim (PVC)** is a request for storage by a use
 
 1. To keep the sensor data safe during Pod restarts, you would create a new Persistent Volume Claim. 
 
-    vi pvc.yaml
+    ```vi pvc.yaml```
 
 ```yaml
 apiVersion: v1
@@ -62,15 +62,15 @@ spec:
       storage: 2Gi
 ```
 
-    kubectl apply -f pvc.yaml
+    ```kubectl apply -f pvc.yaml```
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/pvc.yaml
+    ```kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/pvc.yaml```
 
 2. Verify if your persistent volume now has been claimed:
 
-    kubectl get pvc mariadb-pv-claim
+    ```kubectl get pvc mariadb-pv-claim```
 
 ### Task 3: Declare secret with credentials for MariaDB
 
@@ -78,13 +78,13 @@ A **Kubernetes Secret** is an object that contains a small amount of sensitive d
 
 The MariaDB container image uses an environment variable named as 'MYSQL\_ROOT\_PASSWORD', it hold the root password required to access the database. So you would create a new secret with 'password' key (value as 'cisco123') which would later be used in mariaDB deployment yaml file.
 
-    kubectl create secret generic mariadb-root-pass --from-literal=password=cisco123
+    ```kubectl create secret generic mariadb-root-pass --from-literal=password=cisco123```
 
 ### Task 4: Create MariaDB Deployment
 
 1. Deploy MariaDB, using either command below, or copy paste the manifest to an empty file on the server and apply.
 
-    vi mariadb.yaml
+    ```vi mariadb.yaml```
 
 ```yaml
 ---
@@ -128,32 +128,32 @@ spec:
           claimName: mariadb-pv-claim
 ```
 
-    kubectl apply -f mariadb.yaml
+    ```kubectl apply -f mariadb.yaml```
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mariadb_deployment.yaml
+    ```kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mariadb_deployment.yaml```
 
 2. check deployment:
 
-    kubectl get deployment
-    kubectl get pods
+    ```kubectl get deployment```
+    ```kubectl get pods```
 
 3. Expose MariaDB service as ClusterIP:
 
-    kubectl expose deployment iot-backend-mariadb --type=ClusterIP --target-port=3306 --port=3306 --name mariadb-service
+    ```kubectl expose deployment iot-backend-mariadb --type=ClusterIP --target-port=3306 --port=3306 --name mariadb-service```
 
 >NOTE: every user will execute the same command creating objects with the same names, however each student is using different namespace, therefore names can overlap.
 
 4. check mariaDB service:
 
-    kubectl get service mariadb-service
+    ```kubectl get service mariadb-service```
 
 ### Task 4: Deploy MQTT-to-DB-Agent microservice
 
 1. Deploy mqtt_db_agent microservice, using either command below, or copy paste the manifest to an empty file on the server and apply.
 
-    vi mqtt.yaml
+    ```vi mqtt.yaml```
 
 ```yaml
 ---
@@ -186,28 +186,28 @@ spec:
               key: password
 ```
 
-    kubectl apply -f mqtt.yaml
+    ```kubectl apply -f mqtt.yaml```
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mqtt_db_agent_deployment.yaml
+    ```kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/mqtt_db_agent_deployment.yaml```
 
 2. MQTT is not exposed, rather it is connecting to AWS IoT platform (over proxy which is hardcode in container) and writing data to MariaDB, leveraging mariadb-service to reach the database.
 
 check deployment and pod status. 
 
-    kubectl get deployments
-    kubectl get pods
+    ```kubectl get deployments```
+    ```kubectl get pods```
 
 3. Check logs to see whether MQTT agent successfully connected to AWS IoT platform, create database and tables in MariaDB and finally start receiving data.
 
-    kubectl logs <mqtt_pod_name>
+    ```kubectl logs <mqtt_pod_name>```
 
 ### Task 5: Deploy RestAPI agent
 
 1. This microservice reads data from database, and expose it over HTTP, so it will be later consumed by Frontend server using RestAPI channel rather direct connection to the database.
 
-    vi restapi.yaml
+   ```vi restapi.yaml```
 
 ```yaml
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -241,7 +241,7 @@ spec:
               key: password
 ```
 
-    kubectl apply -f restapi.yaml
+    ```kubectl apply -f restapi.yaml```
 
 or deploy directly using this command:
 
