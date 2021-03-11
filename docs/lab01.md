@@ -1,5 +1,39 @@
 ## Lab 01 - Kubernetes lab access
 
+### Google cloud access
+
+Download google cloud SDK appropriate to your OS:
+
+[https://cloud.google.com/sdk/docs/quickstart](https://cloud.google.com/sdk/docs/quickstart)
+
+Download will take a bit of time. Once downloaded, please follow instruction to initialize:
+
+[https://cloud.google.com/sdk/docs/quickstart#initializing_the](https://cloud.google.com/sdk/docs/quickstart#initializing_the)
+
+Use this command:
+
+```gcloud init```
+
+Use following options:
+- Project: fwardz001-poc-ci1s
+- Zone: europe-west-4a
+
+You will be asked to provide credentials, use your cisco.com address.
+
+Install kubectl - the command line tool for managing Kubernetes clusters:
+
+```gcloud components install kubectl```
+
+Once installed, obtain access to the following cluster:
+
+```gcloud container clusters get-credentials autopilot-bth-2021 --region europe-west4 --project fwardz001-poc-ci1s```
+
+Verify you have access to cluster and you are able to list cluster nodes.
+
+```kubectl get nodes```
+
+---
+
 ### Play with Kubernetes
 
 Go to page: [https://labs.play-with-k8s.com/](https://labs.play-with-k8s.com/)
