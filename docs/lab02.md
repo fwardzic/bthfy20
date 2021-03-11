@@ -23,6 +23,5 @@ spec:
   - name: hello
     image: busybox
     command: ['sh', '-c', 'echo "Hello, Kubernetes!" && sleep 3600']
-  restartPolicy: OnFailure
-# The pod template ends here```
+  restartPolicy: OnFailure```
 
