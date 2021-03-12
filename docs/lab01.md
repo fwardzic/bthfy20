@@ -1,6 +1,6 @@
 ## Lab 01 - Kubernetes lab access
 
-### Google cloud access
+### 1. Google cloud access
 
 Download google cloud SDK appropriate to your OS:
 
@@ -26,7 +26,7 @@ Install kubectl - the command line tool for managing Kubernetes clusters:
 
 Once installed, obtain access to the following cluster:
 
-```gcloud container clusters get-credentials autopilot-bth-2021 --region europe-west4 --project fwardz001-poc-ci1s```
+```gcloud container clusters get-credentials faisal-standard-cluster-1 --zone europe-west4-a --project fwardz001-poc-ci1s```
 
 Verify you have access to cluster and you are able to list cluster nodes.
 
@@ -34,7 +34,7 @@ Verify you have access to cluster and you are able to list cluster nodes.
 
 ---
 
-### Play with Kubernetes
+### 2. Play with Kubernetes
 
 Go to page: [https://labs.play-with-k8s.com/](https://labs.play-with-k8s.com/)
 
