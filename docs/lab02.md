@@ -8,7 +8,7 @@
 
 change default namespace in your kubectl, so you don't have specify namespace everytime
 
-```kubectl config set-context $(kubectl config current-context) --namespace=studentXX```
+```kubectl config set-context gke_fwardz001-poc-ci1s_europe-west4-a_faisal-standard-cluster-1 --namespace=studentXX```
 
 **Replace XX with your assigned number!!!**
 
