@@ -134,7 +134,7 @@ instead of copy paste manifiest to your PC, you can use following command to app
 
 - Check status of your pods - ```kubectl get pods```
 - check status of replicaset - ```kubectl get rs```
-- inrease number of slaves from 2 to 3 - ```kubeclt scale replicaset redis-slave --replicas=3```
+- inrease number of slaves from 2 to 3 - ```kubectl scale replicaset redis-slave --replicas=3```
 - try to delete one of the pods from replicaset ```kubectl delete pod redis-slave-XXXXX``` - where XXX will be random ID.
 - check what will happen
 
