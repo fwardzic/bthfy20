@@ -245,38 +245,34 @@ spec:
 
 or deploy directly using this command:
 
-    kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/restapi.yaml
+    ```kubectl create -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/restapi.yaml```
 
 2. Expose RestAPI agent, so Frontend server can read data using RestAPI. This time we will expose service externally so you can see the raw data in your browser:
 
-    kubectl expose deployment iot-backend-rest-api-agent --type=NodePort --target-port=5050 --port=5050 --name=rest-api-service
+    ```kubectl expose deployment iot-backend-rest-api-agent --type=LoadBalancer --target-port=5050 --port=5050 --name=rest-api-service```
 
-You need to find the NodePort and Kubernetes Node external IP to access the 'rest-api-agent.
+You need to find the External-IP and to access the 'rest-api-agent.
 
 3. Use the following command to display the port exposed by 'rest-api-service' -
     
-    kubectl get service rest-api-service
+    ```kubectl get service rest-api-service```
 
-4. Use the following command to display the 'External-IP' of you kubernetes nodes -
-
-	  kubectl get nodes -o wide
-
-5. Note down the Node External IP Address and NodePort Service Port Number. These values would be used in next section for deploying the frontend app as the environment variables values ('**BACKEND\_HOST**' and '**BACKEND\_PORT**'). 
+4. Note down the External IP Address and NodePort Service Port Number. These values would be used in next section for deploying the frontend app as the environment variables values ('**BACKEND\_HOST**' and '**BACKEND\_PORT**'). 
 You can open web browser and enter IP:port values like this:
 
-	http://<kubernetes node's external ip>:<nodePort>/cities
+	```http://<external ip>:5050/cities```
 	
-	http://<kubernetes node's external ip>:<nodePort>/temperature
+	```http://<external ip>:5050/temperature```
 	
-	http://<kubernetes node's external ip>:<nodePort>/humidity
+	```http://<external ip>:5050/humidity```
 	
-	http://<kubernetes node's external ip>:<nodePort>/sensor_data/city
+	```http://<external ip>:5050/sensor_data/city```
 
 ## Task 6: Deploy frontend microservice
 
 1. In the previous step you noted the the external IP and port. Now we have to pass this information inside frontend container. we will leverage ConfigMap and it will be used by POD to import those values as environment variables inside container.
 
-    kubectl create configmap frontend-to-backend --from-literal=BACKEND_HOST=<any_node_IP> --from-literal=BACKEND_PORT=<port>
+    ```kubectl create configmap frontend-to-backend --from-literal=BACKEND_HOST=rest-api-service --from-literal=BACKEND_PORT=5050```
 
 2. Deploy Frontend server then:
 
@@ -314,19 +310,19 @@ spec:
 
 or use direct command:
 
-    kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/frontend.yaml
+    ```kubectl apply -f https://raw.githubusercontent.com/fwardzic/bthfy20/master/manifests/frontend.yaml```
 
 3. Expose our frontend webserver externally.
 
-    kubectl expose deployment iot-frontend --name frontend-service --type=NodePort --port=80 --target-port=80
+    ```kubectl expose deployment iot-frontend --name frontend-service --type=NodePort --port=80 --target-port=80```
 
 Check external port again:
 
-    kubectl get service iot-frontend
+    ```kubectl get service iot-frontend```
 
 in the browser you can now type:
 
-    http://<kubernetes node's external ip>:<nodePort>
+    ```http://<kubernetes node's external ip>```
 
 Click on Open Dashboard
 
