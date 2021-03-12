@@ -314,7 +314,7 @@ or use direct command:
 
 3. Expose our frontend webserver externally.
 
-    ```kubectl expose deployment iot-frontend --name frontend-service --type=NodePort --port=80 --target-port=80```
+    ```kubectl expose deployment iot-frontend --name frontend-service --type=LoadBalancer --port=80 --target-port=80```
 
 Check external port again:
 
