@@ -1,4 +1,12 @@
-## LAB 00 - creating container with 2048 game
+# LAB05 - Docker only
+
+## Lab access
+
+For lab 1 - use [https://labs.play-with-docker.com/](https://labs.play-with-docker.com/)
+
+Login using docker login (if you don't have please go to [docker.com](https://docker.com) and sign up for new account)
+
+## creating container with 2048 game
 
 In this excercise you will create container which will contain web-server with the 2048 game.
 
@@ -16,7 +24,7 @@ First clone git repository with the 2048 game:
 
 > All credits goes to Gabriele Cirulli - author of the 2048 game.
 
-### Task 1: Create dockerfile
+### Task 2: Create dockerfile
 
 1. create "dockerfile":
 
@@ -43,7 +51,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 `cat dockerfile`
 
-### Task 2: Build container image
+### Task 3: Build container image
 
 1. Build container using following command:
 
@@ -55,7 +63,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 `docker run -P -d <your_docker_hub_user_id>/bth-2048:v1`
 
-### Task 3: Fix issue with the application
+### Task 4: Fix issue with the application and run your app
 
 
 1. Open web page by clicking on the port link above terminal in Play-with-docker, 
