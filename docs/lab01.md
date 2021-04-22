@@ -12,7 +12,12 @@ Download will take a bit of time. Once downloaded, please follow instruction to 
 
 Use this command:
 
+**If you are logged in to gmail, google account with your private login, please log out from your browser**
+
 ```gcloud init```
+
+You will see a link to authenticate, copy to browser and login using your CEC credentials. 
+After authentication, you will see passphrase - copy and paste to the gcloud init wizzard.
 
 Use following options:
 - Project: fwardz001-poc-ci1s
