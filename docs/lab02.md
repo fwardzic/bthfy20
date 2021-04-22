@@ -30,9 +30,9 @@ Run another pod:
 - check what dns is confgured ```cat /etc/resolv.conf```
 - check ip address ```ip add```
 - check environment variables ```env```
-- check on which node container is running ```kubectl get pods -o wide```
 
-exit from pod and check status of you second pod, what is the difference, and why?
+exit from pod and check status of you second pod ```kubectl get pods -o wide```.
+What is the difference, and why?
 
 ---
 
@@ -40,6 +40,7 @@ exit from pod and check status of you second pod, what is the difference, and wh
 
 create a file with following manifest:
 
+test-pod3.yaml:
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -54,13 +55,13 @@ spec:
 
 Copy that manifest file to your text editor, save and execute from your PC:
 
-```kubectl apply -f <path to your manifest file.yaml>```
+```kubectl apply -f test-pod3.yaml```
 
 exit from pod and check status of you third pod, what is the difference, and why?
 
 delete all pods:
 
-```kubectl delete pod XYZ```
+```kubectl delete pod test-pod3.yaml```
 
 ---
 
